@@ -4,8 +4,8 @@ module Fireblocks
   # Namespace to access Fireblocks api methods
   class API
     class << self
-      def get_vault_accounts
-        Request.get(path: '/v1/vault/accounts')
+      def get_vault_accounts(params: {})
+        Request.get(path: '/v1/vault/accounts_paged', params: params)
       end
 
       def create_vault_account(name:)
