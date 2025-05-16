@@ -14,8 +14,8 @@ module Fireblocks
         Request.get(path: path)
       end
 
-      def create_vault_account(name:)
-        Request.post(body: { name: name }, path: '/v1/vault/accounts')
+      def create_vault_account(name:, hidden: false, use_gas_station: false)
+        Request.post(body: { name: name, hiddenOnUI: hidden, autoFuel: use_gas_station }, path: '/v1/vault/accounts')
       end
 
       def get_vault_account(id)
