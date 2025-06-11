@@ -69,7 +69,7 @@ module Fireblocks
         Request.get(path: '/v1/supported_assets')
       end
 
-      def create_transfer(amount:, asset_id:, external_id, source:, destination:)
+      def create_transfer(amount:, asset_id:, external_id:, source:, destination:)
         Request.post(
           body: { operation: 'TRANSFER', externalTxId: external_id, amount: amount, assetId: asset_id, source: source, destination: destination },
           path: "/v1/transactions"
