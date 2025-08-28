@@ -11,12 +11,12 @@ module Fireblocks
         new(path: path).get(body)
       end
 
-      def put(path:, body:)
-        new(path: path).put(body)
+      def put(path:, body:, headers: {})
+        new(path: path).put(body, headers)
       end
 
-      def post(path:, body:)
-        new(path: path).post(body)
+      def post(path:, body:, headers: {})
+        new(path: path).post(body, headers)
       end
     end
 
@@ -34,17 +34,17 @@ module Fireblocks
       valid_response!(send_request(req))
     end
 
-    def put(body)
+    def put(body, headers)
       req = Net::HTTP::Put.new(uri)
-      request_headers(body).each { |rk, rv| req[rk] = rv }
+      request_headers(body, headers).each { |rk, rv| req[rk] = rv }
       req.body = body.to_json
 
       valid_response!(send_request(req))
     end
 
-    def post(body)
+    def post(body, headers)
       req = Net::HTTP::Post.new(uri)
-      request_headers(body).each { |rk, rv| req[rk] = rv }
+      request_headers(body, headers).each { |rk, rv| req[rk] = rv }
       req.body = body.to_json
 
       valid_response!(send_request(req))
@@ -52,12 +52,12 @@ module Fireblocks
 
     private
 
-    def request_headers(body)
+    def request_headers(body, headers)
       {
         'X-API-Key' => Fireblocks.configuration.api_key,
         'Authorization' => "Bearer #{token(body)}",
         'Content-Type' => 'application/json'
-      }
+      }.merge(headers)
     end
 
     def send_request(request)
