@@ -88,6 +88,10 @@ module Fireblocks
           path: "/v1/transactions"
         )
       end
+
+      def estimate_network_fee(asset_id)
+        Request.get(path: "/v1/estimate_network_fee?assetId=#{asset_id}")
+      end
     end
   end
 end
